@@ -1,21 +1,11 @@
-/*
-  BENEFITS.TSX — Seção de benefícios
-  =====================================
-  Demonstra um padrão muito usado em React: renderizar listas com .map().
 
-  Em vez de repetir 6 blocos de <div class="beneficio-item"> no HTML,
-  criamos um array de dados e geramos o HTML dinamicamente.
-  Assim, adicionar ou remover um benefício é só editar o array.
-*/
-
-// Interface local — define o formato de cada benefício
 interface Benefit {
-  icon: React.ReactNode  // ReactNode = qualquer coisa renderizável (JSX, string, etc.)
+  icon: React.ReactNode 
   title: string
   description: string
 }
 
-// Dados separados da apresentação — fácil de editar
+
 const benefits: Benefit[] = [
   {
     icon: (
@@ -85,11 +75,7 @@ export default function Benefits() {
       <div className="beneficios-inner">
         <div className="beneficios-left">
           <div className="section-header" style={{ justifyContent: 'flex-start', marginBottom: 32 }}>
-            {/*
-              Estilos inline em React são objetos JavaScript, não strings CSS.
-              "justify-content" vira "justifyContent" (camelCase).
-              Ex. original: style="justify-content: flex-start; margin-bottom: 32px"
-            */}
+            {}
             <span className="section-eyebrow">Por que trabalhar conosco</span>
             <div className="section-line" style={{ maxWidth: 80 }} />
           </div>
@@ -99,11 +85,7 @@ export default function Benefits() {
         </div>
 
         <div className="beneficios-grid">
-          {/*
-            .map() transforma cada item do array num elemento JSX.
-            "key" é obrigatório — React usa pra identificar cada elemento
-            e atualizar só o que mudou (otimização de performance).
-          */}
+          {}
           {benefits.map((b, i) => (
             <div className="beneficio-item" key={i}>
               <div className="beneficio-icon">{b.icon}</div>
