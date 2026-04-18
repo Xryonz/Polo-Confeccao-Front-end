@@ -1,8 +1,4 @@
-/* ============================================================
-   RESET & VARIABLES
-   Importado em main.tsx com: import './styles/global.css'
-   Funciona igual ao <link rel="stylesheet"> do HTML original.
-============================================================ */
+
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
@@ -27,9 +23,7 @@ a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 img { display: block; width: 100%; }
 
-/* ============================================================
-   HEADER
-============================================================ */
+
 .site-header {
   background: var(--black);
   position: sticky;
@@ -102,9 +96,7 @@ img { display: block; width: 100%; }
   align-items: center;
 }
 
-/* ============================================================
-   SECTION HELPERS
-============================================================ */
+
 .section-header {
   display: flex;
   align-items: center;
@@ -133,9 +125,7 @@ img { display: block; width: 100%; }
 }
 .section-title em { font-style: italic; opacity: 0.45; }
 
-/* ============================================================
-   BENEFÍCIOS
-============================================================ */
+
 .beneficios-section {
   background: var(--black);
   padding: 96px 72px;
@@ -203,9 +193,7 @@ img { display: block; width: 100%; }
   text-transform: uppercase;
 }
 
-/* ============================================================
-   FORMULÁRIO
-============================================================ */
+
 .form-section {
   padding: 96px 72px;
   background: var(--white);
@@ -303,12 +291,12 @@ img { display: block; width: 100%; }
 }
 .form-aside-contact a:hover { color: #fff; }
 
-/* FORM WRAP */
+
 .form-wrap {
   border: 1.5px solid var(--black);
   transition: transform 0.08s;
 }
-/* Animação de shake — ativada via classe .shake no componente */
+
 .form-wrap.shake {
   animation: shake 0.4s ease;
 }
@@ -371,7 +359,7 @@ img { display: block; width: 100%; }
   color: var(--gray);
 }
 
-/* FORM FIELDS */
+
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -445,7 +433,7 @@ img { display: block; width: 100%; }
   color: rgba(0,0,0,0.35);
 }
 
-/* RADIO */
+
 .radio-group {
   display: flex;
   flex-wrap: wrap;
@@ -472,7 +460,7 @@ img { display: block; width: 100%; }
 }
 .radio-item input { display: none; }
 
-/* CHECKBOX */
+
 .checkbox-item {
   display: flex;
   align-items: flex-start;
@@ -500,7 +488,7 @@ img { display: block; width: 100%; }
 }
 .checkbox-item a { text-decoration: underline; text-underline-offset: 2px; }
 
-/* FILE DROP */
+
 .file-drop {
   border: 1px dashed rgba(0,0,0,0.2);
   transition: border-color 0.2s, background 0.2s;
@@ -540,7 +528,7 @@ img { display: block; width: 100%; }
   text-align: center;
 }
 
-/* NAV BUTTONS */
+
 .form-nav {
   display: flex;
   justify-content: space-between;
@@ -578,7 +566,7 @@ img { display: block; width: 100%; }
 }
 .btn-back:hover { color: var(--black); }
 
-/* Botão genérico */
+
 .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; }
 .btn-primary {
   background: var(--black);
@@ -596,7 +584,7 @@ img { display: block; width: 100%; }
   color: var(--black);
 }
 
-/* SUCCESS */
+
 .form-success {
   display: none;
   padding: 80px 48px;
@@ -631,9 +619,7 @@ img { display: block; width: 100%; }
   max-width: 400px;
 }
 
-/* ============================================================
-   FOOTER
-============================================================ */
+
 .site-footer {
   background: var(--black);
   padding: 64px 72px 40px;
@@ -744,9 +730,7 @@ img { display: block; width: 100%; }
   color: rgba(255,255,255,0.15);
 }
 
-/* ============================================================
-   RESPONSIVE
-============================================================ */
+
 @media (max-width: 1024px) {
   .beneficios-inner { grid-template-columns: 1fr; gap: 48px; }
   .beneficios-grid { grid-template-columns: repeat(2, 1fr); }
