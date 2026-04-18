@@ -1,11 +1,4 @@
-/*
-  STEP 2 — Vaga & Experiência
-  ============================
-  Demonstra como lidar com selects e radio buttons em React.
 
-  Ponto importante: radio buttons em React também são controlados.
-  Em vez de checar `r.checked` no DOM, usamos `formData.experiencia === value`.
-*/
 
 import type { FormData, FormErrors } from '../../types/form'
 
@@ -17,7 +10,7 @@ interface Step2Props {
   onPrev: () => void
 }
 
-// Opções de experiência — centralizadas aqui, fáceis de alterar
+
 const experienciaOptions = [
   { value: 'sem',    label: 'Sem experiência' },
   { value: 'junior', label: 'Júnior' },
@@ -89,15 +82,7 @@ export default function Step2({ formData, errors, updateField, onNext, onPrev }:
           <label>Nível de experiência <span className="req">*</span></label>
           <div className="radio-group">
             {experienciaOptions.map(opt => (
-              /*
-                Radio controlado: checked={formData.experiencia === opt.value}
-                Em vez de deixar o browser controlar qual está marcado,
-                o React compara com o estado atual.
-
-                onChange={() => updateField('experiencia', opt.value)}
-                → Ao clicar, atualiza o estado, React re-renderiza,
-                  o radio correto fica marcado. Tudo determinístico.
-              */
+              
               <label className="radio-item" key={opt.value}>
                 <input
                   type="radio"
