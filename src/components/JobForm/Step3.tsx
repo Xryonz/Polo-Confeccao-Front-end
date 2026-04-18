@@ -1,0 +1,188 @@
+/*
+  STEP 3 — Currículo & Envio
+  ============================
+  O mais complexo: lida com upload de arquivo e drag & drop.
+
+  No JS original, isso era feito com event listeners manuais no DOM:
+    fileDrop.addEventListener('dragover', ...)
+    fileInput.addEventListener('change', ...)
+
+  Em React, usamos:
+    - useRef: para acessar o input[type="file"] diretamente
+    - Eventos sintéticos do React: onDragOver, onDrop, onChange
+    - Estado: o arquivo fica em formData.curriculo (via updateField)
+*/
+
+import { useRef } from 'react'
+import type { FormData, FormErrors } from '../../types/form'
+
+interface Step3Props {
+  formData: FormData
+  errors: FormErrors
+  updateField: <K extends keyof FormData>(key: K, value: FormData[K]) => void
+  onPrev: () => void
+  onSubmit: () => void
+  isSubmitting: boolean
+  submitError: string | null
+}
+
+export default function Step3({ formData, errors, updateField, onPrev, onSubmit, isSubmitting, submitError }: Step3Props) {
+  /*
+    useRef<HTMLInputElement>(null) cria uma referência para um elemento do DOM.
+    É como fazer document.getElementById('curriculo') no JS puro,
+    mas do jeito React — sem sair do componente.
+
+    Usamos para abrir o file picker quando o usuário clica na área de drop.
+  */
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Quando um arquivo é selecionado pelo input
+  const handleFileChange = (file: File | undefined) => {
+    if (file) updateField('curriculo', file)
+  }
+
+  // Drag & drop — igual ao original, mas com eventos React
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault()  // necessário para permitir o drop
+    e.currentTarget.classList.add('dragover')
+  }
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.currentTarget.classList.remove('dragover')
+  }
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.currentTarget.classList.remove('dragover')
+    const file = e.dataTransfer.files[0]
+    handleFileChange(file)
+  }
+
+  return (
+    <div className="form-step active" id="step3">
+      <div className="form-step-header">
+        <span className="form-step-num">03</span>
+        <div>
+          <h3 className="form-step-title">Currículo & Envio</h3>
+          <p className="form-step-sub">Finalize sua candidatura</p>
+        </div>
+      </div>
+
+      <div className="form-group full">
+        <label>Currículo (PDF ou DOC) <span className="req">*</span></label>
+        <div
+          className="file-drop"
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          {/*
+            Input file fica oculto (hidden) — a área visual de drop
+            chama fileInputRef.current?.click() para abri-lo.
+          */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            id="curriculo"
+            name="curriculo"
+            accept=".pdf,.doc,.docx"
+            hidden
+            onChange={e => handleFileChange(e.target.files?.[0])}
+          />
+          <div
+            className="file-drop-inner"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+            <p className="file-drop-text">
+              Clique para selecionar ou arraste o arquivo aqui
+            </p>
+            <span className="file-drop-hint">PDF, DOC ou DOCX — máx. 5MB</span>
+          </div>
+          {/* Exibe o nome do arquivo selecionado */}
+          {formData.curriculo && (
+            <div className="file-name">✓&nbsp;&nbsp;{formData.curriculo.name}</div>
+          )}
+        </div>
+        {errors.curriculo && <span className="error-msg">{errors.curriculo}</span>}
+      </div>
+
+      <div className="form-group full">
+        <label htmlFor="portfolio">Link do portfólio (opcional)</label>
+        <input
+          type="url"
+          id="portfolio"
+          name="portfolio"
+          placeholder="https://seuportfolio.com"
+          value={formData.portfolio}
+          onChange={e => updateField('portfolio', e.target.value)}
+        />
+      </div>
+
+      <div className="form-group full">
+        <label htmlFor="observacoes">Observações adicionais</label>
+        <textarea
+          id="observacoes"
+          name="observacoes"
+          rows={3}
+          placeholder="Alguma informação que queira compartilhar conosco?"
+          value={formData.observacoes}
+          onChange={e => updateField('observacoes', e.target.value)}
+        />
+      </div>
+
+      <div className="form-group full">
+        <label className="checkbox-item">
+          <input
+            type="checkbox"
+            id="lgpd"
+            name="lgpd"
+            checked={formData.lgpd}
+            onChange={e => updateField('lgpd', e.target.checked)}
+          />
+          <span>
+            Concordo com o uso dos meus dados para fins de recrutamento e seleção,
+            conforme a <a href="#">Política de Privacidade</a>. <span className="req">*</span>
+          </span>
+        </label>
+        {errors.lgpd && <span className="error-msg">{errors.lgpd}</span>}
+      </div>
+
+      {submitError && (
+        <p style={{ fontSize: '9px', letterSpacing: '2px', textTransform: 'uppercase', color: 'rgba(180,0,0,0.6)' }}>
+          ⚠ {submitError}
+        </p>
+      )}
+
+      <div className="form-nav">
+        <button type="button" className="btn-back" onClick={onPrev}>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          Voltar
+        </button>
+        <button
+          type="button"
+          className="btn-submit"
+          onClick={onSubmit}
+          disabled={isSubmitting}
+        >
+          {/*
+            Operador ternário: condição ? valorSeVerdade : valorSeFalso
+            Se isSubmitting → "Enviando..." / Se não → "Enviar Candidatura"
+          */}
+          {isSubmitting ? 'Enviando...' : 'Enviar Candidatura'}
+          {!isSubmitting && (
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          )}
+        </button>
+      </div>
+    </div>
+  )
+}
