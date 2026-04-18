@@ -1,15 +1,4 @@
-/*
-  STEP 1 — Dados Pessoais
-  ========================
-  Cada step do formulário é um componente separado.
-  Isso mantém o código organizado e fácil de encontrar.
 
-  Recebe do hook (via JobForm):
-    - formData: os valores atuais dos campos
-    - errors: mensagens de erro por campo
-    - updateField: função para atualizar um campo
-    - onNext: função para ir ao próximo step
-*/
 
 import type { FormData, FormErrors } from '../../types/form'
 
@@ -36,15 +25,7 @@ export default function Step1({ formData, errors, updateField, onNext }: Step1Pr
           <label htmlFor="nome">
             Nome completo <span className="req">*</span>
           </label>
-          {/*
-            "htmlFor" em JSX = "for" no HTML.
-            "for" é palavra reservada em JavaScript, por isso a troca.
-
-            onChange={e => updateField('nome', e.target.value)}
-            → Toda vez que o usuário digita, atualiza o estado no hook.
-            O valor exibido vem de value={formData.nome} — isso é um "input controlado".
-            Diferente do HTML puro onde o DOM guarda o valor sozinho.
-          */}
+          {}
           <input
             type="text"
             id="nome"
@@ -128,7 +109,7 @@ export default function Step1({ formData, errors, updateField, onNext }: Step1Pr
       </div>
 
       <div className="form-nav">
-        <span /> {/* Espaçador vazio para o botão ficar à direita */}
+        <span /> {}
         <button type="button" className="btn-next" onClick={onNext}>
           Próximo
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
