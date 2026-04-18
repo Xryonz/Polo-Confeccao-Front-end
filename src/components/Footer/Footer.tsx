@@ -1,14 +1,4 @@
-/*
-  FOOTER.TSX — Rodapé da página
-  ==============================
-  Componente estático, sem estado.
-  Extraído diretamente do <footer> do HTML original.
 
-  Demonstra como reutilizar listas de dados com .map() para
-  manter o código limpo sem repetição.
-*/
-
-// Dados das redes sociais — fácil adicionar/remover
 const socialLinks = [
   {
     label: 'Instagram',
@@ -52,7 +42,7 @@ const socialLinks = [
   },
 ]
 
-// Dados de contato
+
 const contactItems = [
   {
     icon: (
@@ -94,7 +84,7 @@ const contactItems = [
 export default function Footer() {
   return (
     <footer className="site-footer">
-      {/* Logo centralizada */}
+      {}
       <div className="footer-top">
         <div className="footer-logo-wrap">
           <span className="footer-logo-brand">Polo confecção</span>
@@ -108,7 +98,7 @@ export default function Footer() {
 
       <div className="footer-divider" />
 
-      {/* Redes sociais + contato */}
+      {}
       <div className="footer-mid">
         <div className="footer-social-block">
           <span className="footer-block-label">Redes Sociais</span>
@@ -139,7 +129,7 @@ export default function Footer() {
 
       <div className="footer-divider" />
 
-      {/* Copyright */}
+      {}
       <div className="footer-bottom">
         <span className="footer-copy">
           © 2017 – 2026 Polo confecção — Todos os direitos reservados
