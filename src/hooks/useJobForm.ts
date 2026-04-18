@@ -1,26 +1,11 @@
-/*
-  CUSTOM HOOK: useJobForm
-  =======================
-  Um "hook" no React é uma função que começa com "use" e encapsula
-  lógica com estado. Em vez de espalhar variáveis e funções pelo código,
-  reunimos tudo aqui num só lugar.
-
-  O que esse hook substitui do script.js original:
-    - currentStep / showStep() → useState + setCurrentStep
-    - validateStep()           → função validateStep interna
-    - nextStep() / prevStep()  → funções nextStep / prevStep
-    - shakeForm()              → estado shake + setTimeout
-    - submit handler           → handleSubmit com setTimeout de 1200ms
-    - file input logic         → tratado via updateField("curriculo", file)
-*/
 
 import { useState, useCallback } from 'react';
 import type { FormData, FormErrors, StepNumber } from '../types/form';
 
-// URL base da API — em produção troque pelo endereço real do servidor
+
 const API_URL = 'https://polo-confeccao-backend-production.up.railway.app';
 
-// Valores iniciais — todos os campos começam vazios/falsos
+
 const initialData: FormData = {
   nome: '',
   email: '',
@@ -42,11 +27,7 @@ const initialData: FormData = {
 const TOTAL_STEPS: StepNumber = 3;
 
 export function useJobForm() {
-  /*
-    useState<T>(valorInicial) retorna [valor, setValor].
-    Sempre que setValor é chamado, o componente re-renderiza
-    com o novo valor — o DOM é atualizado automaticamente.
-  */
+
   const [currentStep, setCurrentStep] = useState<StepNumber>(1);
   const [formData, setFormData]       = useState<FormData>(initialData);
   const [errors, setErrors]           = useState<FormErrors>({});
@@ -55,30 +36,23 @@ export function useJobForm() {
   const [shake, setShake]               = useState(false);
   const [submitError, setSubmitError]   = useState<string | null>(null);
 
-  /*
-    useCallback(fn, [deps]) memoriza a função para não recriar a cada render.
-    Útil para funções passadas como props para componentes filhos.
-  */
 
-  // Atualiza qualquer campo do formulário de forma genérica
-  // K extends keyof FormData → TypeScript garante que "key" é um campo válido
   const updateField = useCallback(
     <K extends keyof FormData>(key: K, value: FormData[K]) => {
       setFormData(prev => ({ ...prev, [key]: value }));
-      // Remove o erro do campo quando o usuário começa a digitar
+    
       setErrors(prev => ({ ...prev, [key]: undefined }));
     },
     []
   );
 
-  // Animação de shake — igual ao shakeForm() original, mas em estado React
+  
   const triggerShake = useCallback(() => {
     setShake(true);
-    setTimeout(() => setShake(false), 500); // duração da animação CSS
+    setTimeout(() => setShake(false), 500); 
   }, []);
 
-  // Valida os campos de uma etapa específica
-  // Retorna true se válido, false se houver erros
+ 
   const validateStep = useCallback(
     (step: StepNumber): boolean => {
       const newErrors: FormErrors = {};
@@ -103,12 +77,12 @@ export function useJobForm() {
       }
 
       setErrors(newErrors);
-      return Object.keys(newErrors).length === 0; // válido se não há erros
+      return Object.keys(newErrors).length === 0;
     },
     [formData]
   );
 
-  // Avança para o próximo step se a validação passar
+ 
   const nextStep = useCallback(() => {
     if (!validateStep(currentStep)) {
       triggerShake();
@@ -119,7 +93,7 @@ export function useJobForm() {
     }
   }, [currentStep, validateStep, triggerShake]);
 
-  // Volta para o step anterior (sem validação)
+ 
   const prevStep = useCallback(() => {
     if (currentStep > 1) {
       setCurrentStep(s => (s - 1) as StepNumber);
@@ -127,14 +101,14 @@ export function useJobForm() {
     }
   }, [currentStep]);
 
-  // Submete o formulário via fetch para a API backend
+ 
   const handleSubmit = useCallback(async () => {
     if (!validateStep(3)) { triggerShake(); return; }
 
     setIsSubmitting(true);
     setSubmitError(null);
 
-    // FormData nativo do browser (necessário para enviar arquivo junto)
+
     const data = new FormData();
     data.append('nome',        formData.nome);
     data.append('email',       formData.email);
@@ -155,7 +129,7 @@ export function useJobForm() {
       const res = await fetch(`${API_URL}/api/candidaturas`, {
         method: 'POST',
         body: data,
-        // Não defina Content-Type — o browser adiciona o boundary correto
+ 
       });
 
       if (!res.ok) {
@@ -174,7 +148,7 @@ export function useJobForm() {
   }, [formData, validateStep, triggerShake]);
 
   return {
-    // Estado
+   
     currentStep,
     formData,
     errors,
@@ -183,7 +157,7 @@ export function useJobForm() {
     shake,
     submitError,
     totalSteps: TOTAL_STEPS,
-    // Ações
+  
     updateField,
     nextStep,
     prevStep,
