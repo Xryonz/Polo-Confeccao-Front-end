@@ -18,7 +18,7 @@ import { useState, useCallback } from 'react';
 import type { FormData, FormErrors, StepNumber } from '../types/form';
 
 // URL base da API — em produção troque pelo endereço real do servidor
-const API_URL = 'http://localhost:3001';
+const API_URL = 'https://polo-confeccao-backend-production.up.railway.app';
 
 // Valores iniciais — todos os campos começam vazios/falsos
 const initialData: FormData = {
