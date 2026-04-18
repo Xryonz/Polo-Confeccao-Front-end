@@ -1,17 +1,3 @@
-/*
-  STEP 3 — Currículo & Envio
-  ============================
-  O mais complexo: lida com upload de arquivo e drag & drop.
-
-  No JS original, isso era feito com event listeners manuais no DOM:
-    fileDrop.addEventListener('dragover', ...)
-    fileInput.addEventListener('change', ...)
-
-  Em React, usamos:
-    - useRef: para acessar o input[type="file"] diretamente
-    - Eventos sintéticos do React: onDragOver, onDrop, onChange
-    - Estado: o arquivo fica em formData.curriculo (via updateField)
-*/
 
 import { useRef } from 'react'
 import type { FormData, FormErrors } from '../../types/form'
@@ -27,23 +13,17 @@ interface Step3Props {
 }
 
 export default function Step3({ formData, errors, updateField, onPrev, onSubmit, isSubmitting, submitError }: Step3Props) {
-  /*
-    useRef<HTMLInputElement>(null) cria uma referência para um elemento do DOM.
-    É como fazer document.getElementById('curriculo') no JS puro,
-    mas do jeito React — sem sair do componente.
-
-    Usamos para abrir o file picker quando o usuário clica na área de drop.
-  */
+ 
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  // Quando um arquivo é selecionado pelo input
+
   const handleFileChange = (file: File | undefined) => {
     if (file) updateField('curriculo', file)
   }
 
-  // Drag & drop — igual ao original, mas com eventos React
+ 
   const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault()  // necessário para permitir o drop
+    e.preventDefault() 
     e.currentTarget.classList.add('dragover')
   }
 
@@ -76,10 +56,7 @@ export default function Step3({ formData, errors, updateField, onPrev, onSubmit,
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
-          {/*
-            Input file fica oculto (hidden) — a área visual de drop
-            chama fileInputRef.current?.click() para abri-lo.
-          */}
+          {}
           <input
             ref={fileInputRef}
             type="file"
@@ -103,7 +80,7 @@ export default function Step3({ formData, errors, updateField, onPrev, onSubmit,
             </p>
             <span className="file-drop-hint">PDF, DOC ou DOCX — máx. 5MB</span>
           </div>
-          {/* Exibe o nome do arquivo selecionado */}
+          {}
           {formData.curriculo && (
             <div className="file-name">✓&nbsp;&nbsp;{formData.curriculo.name}</div>
           )}
@@ -171,10 +148,7 @@ export default function Step3({ formData, errors, updateField, onPrev, onSubmit,
           onClick={onSubmit}
           disabled={isSubmitting}
         >
-          {/*
-            Operador ternário: condição ? valorSeVerdade : valorSeFalso
-            Se isSubmitting → "Enviando..." / Se não → "Enviar Candidatura"
-          */}
+          {}
           {isSubmitting ? 'Enviando...' : 'Enviar Candidatura'}
           {!isSubmitting && (
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
