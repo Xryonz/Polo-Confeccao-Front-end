@@ -49,7 +49,7 @@ export default function Step3({ formData, errors, updateField, onPrev, onSubmit,
       </div>
 
       <div className="form-group full">
-        <label>Currículo (PDF ou DOC) <span className="req">*</span></label>
+        <label>Currículo (PDF ou DOC) — opcional</label>
         <div
           className="file-drop"
           onDragOver={handleDragOver}

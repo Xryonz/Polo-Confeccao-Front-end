@@ -1,5 +1,3 @@
-
-
 import type { FormData, FormErrors } from '../../types/form'
 
 interface Step2Props {
@@ -10,12 +8,11 @@ interface Step2Props {
   onPrev: () => void
 }
 
-
 const experienciaOptions = [
-  { value: 'sem',    label: 'Sem experiência' },
-  { value: 'junior', label: 'Júnior' },
-  { value: 'pleno',  label: 'Pleno' },
-  { value: 'senior', label: 'Sênior' },
+  { value: 'sem',     label: 'Sem experiência' },
+  { value: '1-3anos', label: '1 a 3 anos' },
+  { value: '3-5anos', label: '3 a 5 anos' },
+  { value: '5+anos',  label: '5 anos ou mais' },
 ]
 
 export default function Step2({ formData, errors, updateField, onNext, onPrev }: Step2Props) {
@@ -41,11 +38,8 @@ export default function Step2({ formData, errors, updateField, onNext, onPrev }:
               className={errors.vaga ? 'error' : ''}
             >
               <option value="" disabled>Selecione uma vaga</option>
-              <option value="vaga1">[ Vaga 1 ]</option>
-              <option value="vaga2">[ Vaga 2 ]</option>
-              <option value="vaga3">[ Vaga 3 ]</option>
-              <option value="vaga4">[ Vaga 4 ]</option>
-              <option value="espontaneo">Envio espontâneo</option>
+              <option value="revisora">Revisora</option>
+              <option value="costureira">Costureira</option>
             </select>
             <svg className="select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <polyline points="6 9 12 15 18 9" />
@@ -55,34 +49,23 @@ export default function Step2({ formData, errors, updateField, onNext, onPrev }:
         </div>
 
         <div className="form-group">
-          <label htmlFor="modalidade">Modalidade <span className="req">*</span></label>
-          <div className="select-wrap">
-            <select
-              id="modalidade"
-              name="modalidade"
-              value={formData.modalidade}
-              onChange={e => updateField('modalidade', e.target.value)}
-              className={errors.modalidade ? 'error' : ''}
-            >
-              <option value="" disabled>Selecione</option>
-              <option value="presencial">Presencial</option>
-              <option value="hibrido">Híbrido</option>
-              <option value="remoto">Remoto</option>
-            </select>
-            <svg className="select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-          {errors.modalidade && <span className="error-msg">{errors.modalidade}</span>}
+          <label htmlFor="pretensao">Pretensão salarial</label>
+          <input
+            type="text"
+            id="pretensao"
+            name="pretensao"
+            placeholder="Ex: R$ 2.500,00"
+            value={formData.pretensao}
+            onChange={e => updateField('pretensao', e.target.value)}
+          />
         </div>
       </div>
 
       <div className="form-row">
-        <div className="form-group">
+        <div className="form-group full">
           <label>Nível de experiência <span className="req">*</span></label>
           <div className="radio-group">
             {experienciaOptions.map(opt => (
-              
               <label className="radio-item" key={opt.value}>
                 <input
                   type="radio"
@@ -96,18 +79,6 @@ export default function Step2({ formData, errors, updateField, onNext, onPrev }:
             ))}
           </div>
           {errors.experiencia && <span className="error-msg">{errors.experiencia}</span>}
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="pretensao">Pretensão salarial</label>
-          <input
-            type="text"
-            id="pretensao"
-            name="pretensao"
-            placeholder="Ex: R$ 2.500,00"
-            value={formData.pretensao}
-            onChange={e => updateField('pretensao', e.target.value)}
-          />
         </div>
       </div>
 

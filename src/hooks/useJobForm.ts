@@ -65,15 +65,13 @@ export function useJobForm() {
       }
 
       if (step === 2) {
-        if (!formData.vaga)               newErrors.vaga        = 'Selecione uma vaga';
-        if (!formData.modalidade)         newErrors.modalidade  = 'Selecione a modalidade';
-        if (!formData.experiencia)        newErrors.experiencia = 'Selecione o nível';
-        if (!formData.historico.trim())   newErrors.historico   = 'Campo obrigatório';
+        if (!formData.vaga)             newErrors.vaga        = 'Selecione uma vaga';
+        if (!formData.experiencia)      newErrors.experiencia = 'Selecione o nível';
+        if (!formData.historico.trim()) newErrors.historico   = 'Campo obrigatório';
       }
 
       if (step === 3) {
-        if (!formData.curriculo) newErrors.curriculo = 'Anexe seu currículo';
-        if (!formData.lgpd)      newErrors.lgpd      = 'Você deve concordar para continuar';
+        if (!formData.lgpd) newErrors.lgpd = 'Você deve concordar para continuar';
       }
 
       setErrors(newErrors);
